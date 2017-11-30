@@ -140,6 +140,14 @@ The `event` parameter is a String object with the name of the event.
 The `listener` parameter is a Function object with one argument that will be notified when the event occurs with data related to the event.
 
 The following events are currently supported:
+* **avatarChanged** - event notifications about avatar
+changes. The listener will receive an object with the following structure:
+```javascript
+{
+"id": id,                 // the id of the participant that changed his avatar.
+"avatar": avatar  // the new avatar URL.
+}
+```
 
 * **audioAvailabilityChanged** - event notifications about audio availability status changes. The listener will receive an object with the following structure:
 ```javascript
@@ -159,7 +167,7 @@ The following events are currently supported:
 messages. The listener will receive an object with the following structure:
 ```javascript
 {
-"from": from,    // JID of the user that sent the message
+"from": from,    // The id of the user that sent the message
 "nick": nick,    // the nickname of the user that sent the message
 "message": txt   // the text of the message
 }
@@ -177,7 +185,7 @@ messages. The listener will receive an object with the following structure:
 changes. The listener will receive an object with the following structure:
 ```javascript
 {
-"jid": jid,                 // the JID of the participant that changed his display name
+"id": id,                 // the id of the participant that changed his display name
 "displayname": displayName  // the new display name
 }
 ```
@@ -185,21 +193,26 @@ changes. The listener will receive an object with the following structure:
 * **participantJoined** - event notifications about new participants who join the room. The listener will receive an object with the following structure:
 ```javascript
 {
-"jid": jid   // the JID of the participant
+"id": id,   // the id of the participant
+"displayName": displayName, // the display name of the participant
+"avatar": avatar // the avatar URL of the participant
 }
 ```
 
 * **participantLeft** - event notifications about participants that leave the room. The listener will receive an object with the following structure:
 ```javascript
 {
-"jid": jid   // the JID of the participant
+"id": id   // the id of the participant
 }
 ```
 
 * **videoConferenceJoined** - event notifications fired when the local user has joined the video conference. The listener will receive an object with the following structure:
 ```javascript
 {
-"roomName": room   // the room name of the conference
+"roomName": room,   // the room name of the conference
+"id": id, // the id of the local participant
+"displayName": displayName, // the display name of the local participant
+"avatar": avatar // the avatar URL of the local participant
 }
 ```
 
@@ -262,6 +275,16 @@ api.removeEventListeners(["incomingMessage", "outgoingMessageListener"]);
 You can get the number of participants in the conference with the following API function:
 ```javascript
 var numberOfParticipants = api.getNumberOfParticipants();
+```
+
+You can get the avatar URL of a participant in the conference with the following API function:
+```javascript
+var displayName = api.getAvatar(participantId);
+```
+
+You can get the display name of a participant in the conference with the following API function:
+```javascript
+var avatarUrl = api.getDisplayName(participantId);
 ```
 
 You can get the iframe HTML element where Jitsi Meet is loaded with the following API function:
